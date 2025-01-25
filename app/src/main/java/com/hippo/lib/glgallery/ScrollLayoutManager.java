@@ -22,15 +22,15 @@ import android.util.Log;
 
 import androidx.annotation.NonNull;
 
-import com.hippo.glview.anim.Animation;
-import com.hippo.glview.anim.FloatAnimation;
-import com.hippo.glview.view.GLView;
-import com.hippo.glview.widget.GLEdgeView;
-import com.hippo.glview.widget.GLProgressView;
-import com.hippo.glview.widget.GLTextureView;
-import com.hippo.yorozuya.AnimationUtils;
-import com.hippo.yorozuya.AssertUtils;
-import com.hippo.yorozuya.MathUtils;
+import com.hippo.lib.glview.anim.Animation;
+import com.hippo.lib.glview.anim.FloatAnimation;
+import com.hippo.lib.glview.view.GLView;
+import com.hippo.lib.glview.widget.GLEdgeView;
+import com.hippo.lib.glview.widget.GLProgressView;
+import com.hippo.lib.glview.widget.GLTextureView;
+import com.hippo.lib.yorozuya.AnimationUtils;
+import com.hippo.lib.yorozuya.AssertUtils;
+import com.hippo.lib.yorozuya.MathUtils;
 import java.util.Iterator;
 import java.util.LinkedList;
 import java.util.List;

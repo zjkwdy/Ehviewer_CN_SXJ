@@ -44,9 +44,9 @@ import com.hippo.ehviewer.ui.MainActivity;
 import com.hippo.scene.Announcer;
 import com.hippo.scene.SceneFragment;
 import com.hippo.util.ExceptionUtils;
-import com.hippo.yorozuya.AssertUtils;
-import com.hippo.yorozuya.IntIdGenerator;
-import com.hippo.yorozuya.ViewUtils;
+import com.hippo.lib.yorozuya.AssertUtils;
+import com.hippo.lib.yorozuya.IntIdGenerator;
+import com.hippo.lib.yorozuya.ViewUtils;
 
 public final class SignInScene extends SolidScene implements EditText.OnEditorActionListener,
         View.OnClickListener {
@@ -130,7 +130,7 @@ public final class SignInScene extends SolidScene implements EditText.OnEditorAc
         mSignIn = ViewUtils.$$(loginForm, R.id.sign_in);
         mSignInViaWebView = (TextView) ViewUtils.$$(loginForm, R.id.sign_in_via_webview);
         mSignInViaCookies = (TextView) ViewUtils.$$(loginForm, R.id.sign_in_via_cookies);
-        mSkipSigningIn = (TextView) ViewUtils.$$(loginForm, R.id.skip_signing_in);
+        mSkipSigningIn = (TextView) ViewUtils.$$(loginForm, R.id.guest_mode);
 
         mSignInViaWebView.setPaintFlags(mSignInViaWebView.getPaintFlags() | Paint.UNDERLINE_TEXT_FLAG);
         mSignInViaCookies.setPaintFlags(mSignInViaCookies.getPaintFlags() | Paint.UNDERLINE_TEXT_FLAG);

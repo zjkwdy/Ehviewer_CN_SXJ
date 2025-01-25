@@ -31,7 +31,7 @@ import com.hippo.ehviewer.EhApplication;
 import com.hippo.ehviewer.R;
 import com.hippo.preference.DialogPreference;
 import com.hippo.util.IoThreadPoolExecutor;
-import com.hippo.yorozuya.IntIdGenerator;
+import com.hippo.lib.yorozuya.IntIdGenerator;
 
 public abstract class TaskPreference extends DialogPreference {
 
@@ -81,10 +81,18 @@ public abstract class TaskPreference extends DialogPreference {
     @NonNull
     protected abstract Task onCreateTask();
 
-    @Override
-    public void onActivityDestroy() {
-        super.onActivityDestroy();
+//    @Override
+//    public void onActivityDestroy() {
+//        super.onActivityDestroy();
+//
+//        if (null != mTask) {
+//            mTask.setPreference(null);
+//        }
+//    }
 
+    @Override
+    public void onDetached() {
+        super.onDetached();
         if (null != mTask) {
             mTask.setPreference(null);
         }

@@ -55,9 +55,9 @@ import com.hippo.widget.ContentLayout;
 import com.hippo.widget.LoadImageView;
 import com.hippo.widget.Slider;
 import com.hippo.widget.recyclerview.AutoGridLayoutManager;
-import com.hippo.yorozuya.AssertUtils;
-import com.hippo.yorozuya.LayoutUtils;
-import com.hippo.yorozuya.ViewUtils;
+import com.hippo.lib.yorozuya.AssertUtils;
+import com.hippo.lib.yorozuya.LayoutUtils;
+import com.hippo.lib.yorozuya.ViewUtils;
 import com.google.firebase.crashlytics.FirebaseCrashlytics;
 
 import org.greenrobot.eventbus.EventBus;
@@ -97,11 +97,12 @@ public class GalleryPreviewsScene extends ToolbarScene implements EasyRecyclerVi
         Context context = getEHContext();
         AssertUtils.assertNotNull(context);
         mClient = EhApplication.getEhClient(context);
-        if (savedInstanceState == null) {
-            onInit();
-        } else {
-            onRestore(savedInstanceState);
-        }
+        onInit();
+//        if (savedInstanceState == null) {
+//            onInit();
+//        } else {
+//            onRestore(savedInstanceState);
+//        }
     }
 
     private void onInit() {
@@ -120,16 +121,16 @@ public class GalleryPreviewsScene extends ToolbarScene implements EasyRecyclerVi
 
     @Override
     public void onSaveInstanceState(@NonNull Bundle outState) {
-        super.onSaveInstanceState(outState);
+//        super.onSaveInstanceState(outState);
 
-        boolean hasFirstRefresh;
-        if (mHelper != null && 1 == mHelper.getShownViewIndex()) {
-            hasFirstRefresh = false;
-        } else {
-            hasFirstRefresh = mHasFirstRefresh;
-        }
-        outState.putBoolean(KEY_HAS_FIRST_REFRESH, hasFirstRefresh);
-        outState.putParcelable(KEY_GALLERY_INFO, mGalleryInfo);
+//        boolean hasFirstRefresh;
+//        if (mHelper != null && 1 == mHelper.getShownViewIndex()) {
+//            hasFirstRefresh = false;
+//        } else {
+//            hasFirstRefresh = mHasFirstRefresh;
+//        }
+//        outState.putBoolean(KEY_HAS_FIRST_REFRESH, hasFirstRefresh);
+//        outState.putParcelable(KEY_GALLERY_INFO, mGalleryInfo);
     }
 
     @Nullable
@@ -319,6 +320,11 @@ public class GalleryPreviewsScene extends ToolbarScene implements EasyRecyclerVi
                     activity.getStageId(), getTag(), taskId));
             request.setArgs(url);
             mClient.execute(request);
+        }
+
+        @Override
+        protected void getPageData(int taskId, int type, int page, String append) {
+            // empty
         }
 
         @Override

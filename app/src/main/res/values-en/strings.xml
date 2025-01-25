@@ -154,7 +154,7 @@
     <string name="app_waring">The content of this application is from the Internet. Some of it may do physical or mental harm to you. You have learnt the risks above and would like to undertake them.</string>
     <string name="error_username_cannot_empty">Username cannot be an empty string</string>
     <string name="error_password_cannot_empty">Password cannot be an empty string</string>
-    <string name="skip_signing_in">Continue without signing in</string>
+    <string name="guest_mode">Continue with Guest Mode</string>
     <string name="sign_in_failed">Sign in failed</string>
     <string name="sign_in_failed_tip">If this issue continues, try \"Sign in via WebView\" or \"Sign in via cookies\"</string>
     <string name="sign_in_failed_plain">Perhaps it is a mistake due to website update or something wrong happened. You may try sign in via WebView or enter cookie or skip signing in under sign in button. But you may be a "Sad Panda" after skipping signing in. Try "Sign in via cookies" first if you had signed in on 0.6.x version.</string>
@@ -176,7 +176,9 @@
 
     <!-- Update -->
     <string name="update">Update</string>
+    <string name="update_fail">Check for updates failed</string>
     <string name="update_plain">Version: %1$s\nSize: %2$s\n\n%3$s</string>
+    <string name="update_fail_info">Click Yes to jump to Github homepage</string>
     <string name="update_to_date">You are using the latest version of EhViewer.</string>
     <string name="update_ignore">Ignore</string>
 
@@ -820,5 +822,17 @@
     <string name="settings_download_timeout_summary">%s(S),Maximum time allowed to download an image.</string>
     <string name="have_new_version">Click to see new gallery version</string>
     <string name="archiver_downloading">Arc Downloading %s</string>
+    <string name="order">Order</string>
+    <string name="sort_by_pub_time">Published Time</string>
+    <string name="sort_by_fav_time">Favorited Time</string>
+    <string name="settings_eh_sign_out_restart">Automatically restarting for you, please wait</string>
+    <!--  订阅服务  -->
+    <string name="subscription_watched">Watched</string>
+    <string name="subscription_hidden">Hidden</string>
+    <string name="delete_subscription_title">Remove Tag</string>
+    <string name="can_not_use_this_tag">Tags are not available</string>
+    <string name="add_tag_dialog_title">Add Tag</string>
+    <string name="tag_title">Tag</string>
+    <string name="subscription_success">%s success</string>
 
 </resources>

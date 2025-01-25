@@ -118,12 +118,12 @@ import com.hippo.widget.ContentLayout;
 import com.hippo.widget.FabLayout;
 import com.hippo.widget.LoadImageViewNew;
 import com.hippo.widget.SearchBarMover;
-import com.hippo.yorozuya.AnimationUtils;
-import com.hippo.yorozuya.AssertUtils;
-import com.hippo.yorozuya.MathUtils;
-import com.hippo.yorozuya.SimpleAnimatorListener;
-import com.hippo.yorozuya.StringUtils;
-import com.hippo.yorozuya.ViewUtils;
+import com.hippo.lib.yorozuya.AnimationUtils;
+import com.hippo.lib.yorozuya.AssertUtils;
+import com.hippo.lib.yorozuya.MathUtils;
+import com.hippo.lib.yorozuya.SimpleAnimatorListener;
+import com.hippo.lib.yorozuya.StringUtils;
+import com.hippo.lib.yorozuya.ViewUtils;
 
 import org.greenrobot.eventbus.EventBus;
 import org.greenrobot.eventbus.Subscribe;
@@ -288,7 +288,7 @@ public final class GalleryListScene extends BaseScene
     private int popupWindowPosition = -1;
 
     private ShowcaseView mShowcaseView;
-
+    private GalleryListSceneDialog tagDialog;
     private DownloadManager mDownloadManager;
     private DownloadManager.DownloadInfoListener mDownloadInfoListener;
     private FavouriteStatusRouter mFavouriteStatusRouter;
@@ -409,8 +409,10 @@ public final class GalleryListScene extends BaseScene
             }
         };
         mFavouriteStatusRouter.addListener(mFavouriteStatusRouterListener);
+        if (ehTags==null){
+            ehTags = EhTagDatabase.getInstance(context);
+        }
 
-        ehTags = EhTagDatabase.getInstance(context);
 
         if (savedInstanceState == null) {
             onInit();
@@ -778,9 +780,14 @@ public final class GalleryListScene extends BaseScene
     }
 
     private boolean onTagLongClick(String tagName) {
-        GalleryListSecenDialog dialog = new GalleryListSecenDialog(this);
-        dialog.setTagName(tagName);
-        dialog.showTagLongPressDialog();
+        if (tagDialog==null){
+            tagDialog = new GalleryListSceneDialog(this);
+        }
+        if (ehTags==null){
+            ehTags = EhTagDatabase.getInstance(getContext());
+        }
+        tagDialog.setTagName(tagName);
+        tagDialog.showTagLongPressDialog(ehTags);
         return true;
     }
 
@@ -1057,6 +1064,13 @@ public final class GalleryListScene extends BaseScene
     private View subscriptionViewBuild(LayoutInflater inflater) {
         mSubscriptionDraw = new SubscriptionDraw(getEHContext(), inflater, mClient, getTag(), ehTags);
         return mSubscriptionDraw.onCreate(drawPager, getActivity2(), this);
+    }
+    @Override
+    public void setTagList(UserTagList tagList) {
+        if (mSubscriptionDraw==null){
+            return;
+        }
+         mSubscriptionDraw.setUserTagList(tagList);
     }
 
     @Override
@@ -2025,6 +2039,11 @@ public final class GalleryListScene extends BaseScene
                 request.setArgs(url, mUrlBuilder.getMode());
                 mClient.execute(request);
             }
+        }
+
+        @Override
+        protected void getPageData(int taskId, int type, int page, String append) {
+            // empty
         }
 
         @Override

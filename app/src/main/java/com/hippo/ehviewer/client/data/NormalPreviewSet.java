@@ -19,7 +19,7 @@ package com.hippo.ehviewer.client.data;
 import android.os.Parcel;
 
 import com.hippo.widget.LoadImageView;
-import com.hippo.yorozuya.collect.IntList;
+import com.hippo.lib.yorozuya.collect.IntList;
 
 import java.util.ArrayList;
 
@@ -122,7 +122,7 @@ public class NormalPreviewSet extends PreviewSet {
         this.mPageUrlList = in.createStringArrayList();
     }
 
-    public static final Creator<NormalPreviewSet> CREATOR = new Creator<NormalPreviewSet>() {
+    public static final Creator<NormalPreviewSet> CREATOR = new Creator<>() {
         @Override
         public NormalPreviewSet createFromParcel(Parcel source) {
             return new NormalPreviewSet(source);

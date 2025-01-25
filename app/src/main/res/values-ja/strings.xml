@@ -76,7 +76,7 @@
     <string name="app_waring">このアプリの内容はインターネットから取得したものです。その内容の一部は使用者のお体や心理に傷つける恐れがあります。それでも続行しますか？</string>
     <string name="error_username_cannot_empty">ユーザー名を入力してください。</string>
     <string name="error_password_cannot_empty">パスワードを入力してください。</string>
-    <string name="skip_signing_in">ログインをスキップする</string>
+    <string name="guest_mode">ゲストモード</string>
     <string name="sign_in_failed">ログインに失敗しました。</string>
     <string name="sign_in_failed_plain">このエラーの原因は、ウェブサイトがメンテンス中か、または不明なエラーが発生したことである可能性があります。ログインボタンの下でウェブでログインするか、Cookieを入力してログインするか、またはログインをスキップしてみてください。ログインをスキップすると「Sad Panda」エラーが発生することがあります。0.6.xバージョンでログインした場合、Cookieでログインすることをおすすめします。</string>
     <string name="press_twice_exit">もう一度押して終了します。</string>
@@ -94,7 +94,9 @@
     <string name="no_select">サイトを選択してください</string>
     <!-- Update -->
     <string name="update">アップデート</string>
+    <string name="update_fail">Check for updates failed</string>
     <string name="update_plain">バージョン：%1$s\nサイズ：%2$s\n\n%3$s</string>
+    <string name="update_fail_info">Click Yes to jump to Github homepage</string>
     <string name="update_to_date">EhViewerは既に最新のバージョンです。</string>
     <string name="update_ignore">無視</string>
     <string name="no_updates_available">最新のバージョンです</string>
@@ -668,10 +670,10 @@
     <string name="settings_advanced_built_ex_hosts_summary">アプリによって提供されるホストから、IPへのマッピングは\nカスタムのhosts.txtによって上書きできます</string>
     <string name="network_remind">VPNが有効になっていることが検出されました。ネットワークセキュリティに注意してください</string>
     <string name="no_blicklist">これはブラックリストです</string>
-    <!--  日本語化不足対応  -->
-    <string name="settings_eh_lock_cookies_igneous">Cookieイグニウスフィールドをロックする</string>
-    <!--  翻訳不能  -->
-    <string name="settings_eh_lock_cookies_igneous_summary">特別な状況を除いて、これを有効にすることは推奨しません</string>
+<!--    &lt;!&ndash;  日本語化不足対応  &ndash;&gt;-->
+<!--    <string name="settings_eh_lock_cookies_igneous">Cookieイグニウスフィールドをロックする</string>-->
+<!--    &lt;!&ndash;  翻訳不能  &ndash;&gt;-->
+<!--    <string name="settings_eh_lock_cookies_igneous_summary">特別な状況を除いて、これを有効にすることは推奨しません</string>-->
     <string name="settings_eh_show_jpn_title_summary">EHentaiウェブサイトの設定で日本語タイトルを有効化する必要があります</string>
     <string name="settings_eh_show_tag_translations">中国語のタグ翻訳を表示する</string>
     <string name="settings_eh_show_tag_translations_summary">原文ではなく中国語のタグ翻訳を表示します(データファイルのダウンロードに時間がかかります)</string>
@@ -757,4 +759,18 @@
     <string name="settings_download_timeout_summary">%s(S),Maximum time allowed to download an image.</string>
     <string name="have_new_version">Click to see new gallery version</string>
     <string name="archiver_downloading">Arc Downloading %s</string>
+    <string name="order">Order</string>
+    <string name="sort_by_pub_time">Published Time</string>
+    <string name="sort_by_fav_time">Favorited Time</string>
+    <string name="settings_eh_sign_out_restart">Automatically restarting for you, please wait</string>
+    <!--  订阅服务  -->
+    <string name="subscription_watched">Watched</string>
+    <string name="subscription_hidden">Hidden</string>
+    <string name="delete_subscription_title">Remove Tag</string>
+    <string name="can_not_use_this_tag">Tags are not available</string>
+    <string name="add_tag_dialog_title">Add Tag</string>
+    <string name="tag_title">Tag</string>
+    <string name="subscription_success">%s成功</string>
+    <string name="empty_subscription">Subscription is empty</string>
+
 </resources>

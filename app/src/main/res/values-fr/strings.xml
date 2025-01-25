@@ -89,7 +89,7 @@
     <string name="app_waring">Le contenu de l\'application provient de l\'Internet, dont quelque chose peut vous causer le dommage physique ou mentale. Vous l\'avez bien compris et voulez continuer quand même.</string>
     <string name="error_username_cannot_empty">Nom d\'ultilisateur ne doit pas être une chaîne vide</string>
     <string name="error_password_cannot_empty">Mot de passe ne doit pas être une chaîne vide</string>
-    <string name="skip_signing_in">Continuer sans se connecter</string>
+    <string name="guest_mode">Mode Invité</string>
     <string name="sign_in_failed">Impossible de se connecter</string>
     <string name="sign_in_failed_plain">Il se peut que ce soit une erreur causée par la mise à jour du site Web ou d\'autre chose. Vous pouvez essayer de vous connecter via WebView, à l\'aide de cookies, ou continuer sans vous connecter. Mais si vous ne vous connectez pas, vous pouvez devenir un panda triste. Essayez de vous connecter à l\'aide de cookies si vous vous êtes connecté(e) dans la version 0.6.x.</string>
     <string name="press_twice_exit">Appuyez encore une fois pour quitter</string>
@@ -110,7 +110,9 @@
 
     <!-- Update -->
     <string name="update">Mettre à jour</string>
+    <string name="update_fail">Check for updates failed</string>
     <string name="update_plain">Version : %1$s\nTaille : %2$s\n\n%3$s</string>
+    <string name="update_fail_info">Click Yes to jump to Github homepage</string>
     <string name="update_to_date">EhViewer est à jour.</string>
     <string name="update_ignore">Ignorer</string>
     <string name="no_updates_available">Est déjà la dernière version</string>
@@ -730,5 +732,18 @@
     <string name="settings_download_timeout_summary">%s(S),Maximum time allowed to download an image.</string>
     <string name="have_new_version">Click to see new gallery version</string>
     <string name="archiver_downloading">Arc Downloading %s</string>
+    <string name="order">Order</string>
+    <string name="sort_by_pub_time">Published Time</string>
+    <string name="sort_by_fav_time">Favorited Time</string>
+    <string name="settings_eh_sign_out_restart">Automatically restarting for you, please wait</string>
+    <!--  订阅服务  -->
+    <string name="subscription_watched">Watched</string>
+    <string name="subscription_hidden">Hidden</string>
+    <string name="delete_subscription_title">Remove Tag</string>
+    <string name="can_not_use_this_tag">Tags are not available</string>
+    <string name="add_tag_dialog_title">Add Tag</string>
+    <string name="tag_title">Tag</string>
+    <string name="empty_subscription">Subscription is empty</string>
+    <string name="subscription_success">%s success</string>
 
 </resources>

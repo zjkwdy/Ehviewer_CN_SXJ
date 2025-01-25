@@ -35,10 +35,10 @@ import com.hippo.streampipe.InputStreamPipe;
 import com.hippo.streampipe.OutputStreamPipe;
 import com.hippo.unifile.FilenameFilter;
 import com.hippo.unifile.UniFile;
-import com.hippo.yorozuya.FileUtils;
-import com.hippo.yorozuya.IOUtils;
-import com.hippo.yorozuya.MathUtils;
-import com.hippo.yorozuya.Utilities;
+import com.hippo.lib.yorozuya.FileUtils;
+import com.hippo.lib.yorozuya.IOUtils;
+import com.hippo.lib.yorozuya.MathUtils;
+import com.hippo.lib.yorozuya.Utilities;
 
 import java.io.File;
 import java.io.IOException;
@@ -321,8 +321,12 @@ public final class SpiderDen {
         if (dir == null) {
             return null;
         }
+        if (extension==null||!extension.contains(".")){
+            extension = fixExtension('.' + extension);
+        }else {
+            extension = fixExtension(extension);
+        }
 
-        extension = fixExtension('.' + extension);
         UniFile file = dir.createFile(generateImageFilename(index, extension));
         if (file != null) {
             return new UniFileOutputStreamPipe(file);
@@ -380,9 +384,9 @@ public final class SpiderDen {
     @Nullable
     public InputStreamPipe openInputStreamPipe(int index) {
         if (mMode == SpiderQueen.MODE_READ) {
-            InputStreamPipe pipe = openCacheInputStreamPipe(index);
+            InputStreamPipe pipe = openDownloadInputStreamPipe(index);
             if (pipe == null) {
-                pipe = openDownloadInputStreamPipe(index);
+                pipe = openCacheInputStreamPipe(index);
             }
             return pipe;
         } else if (mMode == SpiderQueen.MODE_DOWNLOAD) {

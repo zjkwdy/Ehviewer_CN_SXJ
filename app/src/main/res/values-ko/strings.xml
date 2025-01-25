@@ -101,7 +101,7 @@
     <string name="app_waring">이 앱의 내용은 인터넷에서 받아옵니다. 이 앱을 사용하기 위해서는 받아온 내용 중 일부가 사용자에게 가할 수 있는 신체적 또는 정신적 피해를 감수해야 합니다.</string>
     <string name="error_username_cannot_empty">사용자 이름은 비워둘 수 없습니다.</string>
     <string name="error_password_cannot_empty">비밀번호는 비워둘 수 없습니다.</string>
-    <string name="skip_signing_in">로그인 없이 사용</string>
+    <string name="guest_mode">게스트 모드</string>
     <string name="sign_in_failed">로그인 실패</string>
     <string name="sign_in_failed_tip">오류가 계속되면 WebView 또는 쿠키를 통한 로그인을 시도해보세요.</string>
     <string name="sign_in_failed_plain">뭔가가 잘못되었습니다. 웹사이트가 업데이트 중일 수 있습니다. WebView 또는 쿠키를 사용하여 로그인하거나 아래 버튼을 눌러 로그인을 건너뛸 수 있습니다. 그러나 로그인을 건너뛰면 "슬픈 팬더"를 보게 될 것입니다.</string>
@@ -123,7 +123,9 @@
 
     <!-- Update -->
     <string name="update">업데이트</string>
+    <string name="update_fail">Check for updates failed</string>
     <string name="update_plain">버전: %1$s\n파일 크기: %2$s\n\n%3$s</string>
+    <string name="update_fail_info">Click Yes to jump to Github homepage</string>
     <string name="update_to_date">최신 버전의 EhViewer를 사용 중입니다.</string>
     <string name="update_ignore">무시</string>
     <string name="no_updates_available">최신 버전입니다</string>
@@ -762,6 +764,7 @@
     <string name="add_tag_dialog_title">태그 추가</string>
     <string name="tag_title">태그</string>
     <string name="empty_subscription">구독 목록이 비어 있음</string>
+    <string name="subscription_success">%s success</string>
 
     <!-- 下?通知   -->
     <string name="download_torrent_name">시드: %s</string>
@@ -803,4 +806,10 @@
     <string name="settings_download_timeout_summary">%s(S),Maximum time allowed to download an image.</string>
     <string name="have_new_version">Click to see new gallery version</string>
     <string name="archiver_downloading">Arc Downloading %s</string>
+    <string name="order">Order</string>
+    <string name="sort_by_pub_time">Published Time</string>
+    <string name="sort_by_fav_time">Favorited Time</string>
+    <string name="settings_eh_sign_out_restart">Automatically restarting for you, please wait</string>
+
+
 </resources>

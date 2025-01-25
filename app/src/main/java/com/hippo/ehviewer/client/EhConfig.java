@@ -530,6 +530,16 @@ public class EhConfig implements Cloneable {
      */
     public static final String CONTENT_WARNING_NOT_SHOW = "1";
 
+    public static final String UPDATE_PATH = "Ehviewer/Update/";
+    public static final String ARCHIVER_PATH = "Ehviewer/Archiver/";
+    public static final String TORRENT_PATH = "Ehviewer/Torrent/";
+
+    /**
+     * favorites list sort by Favorited Time or Published Time
+     */
+    public static final String ORDER_BY_FAV_TIME = "f";
+    public static final String ORDER_BY_PUB_TIME = "p";
+
     /**
      * Load images through the Hentai@Home Network<br/>
      * key: {@link #KEY_LOAD_FROM_HAH}<br/>

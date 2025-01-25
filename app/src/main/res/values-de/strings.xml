@@ -85,7 +85,9 @@
     <string name="select_scene_explain">e-hentai: für jeden verfügbar\nexhentai: nur für diejenigen verfügbar, die sich angemeldet haben</string>
     <string name="no_select">Wähle eine Webseite aus.</string>
     <string name="update">Update</string>
+    <string name="update_fail">Check for updates failed</string>
     <string name="update_plain">Version: %1$s\nGröße: %2$s\n\n%3$s</string>
+    <string name="update_fail_info">Click Yes jump to Github homepage</string>
     <string name="update_to_date">EhViewer ist auf dem neusten Stand.</string>
     <string name="no_updates_available">Da liegt das neueste raus</string>
     <string name="update_ignore">Ignorieren</string>
@@ -474,7 +476,7 @@
     <string name="app_waring">Inhalt dieser App kommt aus dem Internet, von dem einige dir körperlichen oder emotionalen Schaden zufügen kann. Du hast es wirklich erfahrt und möchtest immer noch fortsetzen.</string>
     <string name="error_username_cannot_empty">Gibt den Nutzername ein</string>
     <string name="error_password_cannot_empty">Gibt das Passwort ein</string>
-    <string name="skip_signing_in">Anmeldung überspringen</string>
+    <string name="guest_mode">Gastmodus</string>
     <string name="sign_in_failed">Anmeldung fehlgeschlagen</string>
     <string name="sign_in_failed_plain">Der Fehler könnte wegen des Updates der Webseite aufgetretet werden. Versuche, dich anzumelden, indem du WebView benutzt oder Cookie eingeben, oder überspringe die Anmeldung mit der Taste unter ANMELDEN-Taste. Du könntest aber den Sad Panda sehen, wenn du dich nicht anmelden. Falls du dich mit Version unter 0.6.x anmeldetest, versuche, dich mit Cookie anzumelden.</string>
     <string name="content_layout_restore_tip">Zum Wiederholen antippen</string>
@@ -593,5 +595,18 @@
     <string name="settings_download_timeout_summary">%s(S),Maximum time allowed to download an image.</string>
     <string name="have_new_version">Click to see new gallery version</string>
     <string name="archiver_downloading">Arc Downloading %s</string>
+    <string name="order">Order</string>
+    <string name="sort_by_pub_time">Published Time</string>
+    <string name="sort_by_fav_time">Favorited Time</string>
+    <string name="settings_eh_sign_out_restart">Automatically restarting for you, please wait</string>
 
+    <!--  订阅服务  -->
+    <string name="subscription_watched">Watched</string>
+    <string name="subscription_hidden">Hidden</string>
+    <string name="delete_subscription_title">Remove Tag</string>
+    <string name="can_not_use_this_tag">Tags are not available</string>
+    <string name="add_tag_dialog_title">Add Tag</string>
+    <string name="tag_title">Tag</string>
+    <string name="empty_subscription">Subscription is empty</string>
+    <string name="subscription_success">%s success</string>
 </resources>

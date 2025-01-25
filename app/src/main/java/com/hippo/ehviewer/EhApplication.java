@@ -38,6 +38,8 @@ import androidx.annotation.Nullable;
 import androidx.appcompat.app.AlertDialog;
 import androidx.collection.LruCache;
 
+import com.hippo.Native;
+//import com.gu.toolargetool.TooLargeTool;
 import com.hippo.a7zip.A7Zip;
 import com.hippo.beerbelly.SimpleDiskCache;
 import com.hippo.conaco.Conaco;
@@ -52,8 +54,7 @@ import com.hippo.ehviewer.client.data.userTag.UserTagList;
 import com.hippo.ehviewer.download.DownloadManager;
 import com.hippo.ehviewer.spider.SpiderDen;
 import com.hippo.ehviewer.ui.CommonOperations;
-import com.hippo.image.Image;
-import com.hippo.image.ImageBitmap;
+import com.hippo.lib.image.Image;
 import com.hippo.network.EhSSLSocketFactory;
 import com.hippo.network.EhSSLSocketFactoryLowSDK;
 import com.hippo.network.EhX509TrustManager;
@@ -65,10 +66,10 @@ import com.hippo.util.BitmapUtils;
 import com.hippo.util.ExceptionUtils;
 import com.hippo.util.IoThreadPoolExecutor;
 import com.hippo.util.ReadableTime;
-import com.hippo.yorozuya.FileUtils;
-import com.hippo.yorozuya.IntIdGenerator;
-import com.hippo.yorozuya.OSUtils;
-import com.hippo.yorozuya.SimpleHandler;
+import com.hippo.lib.yorozuya.FileUtils;
+import com.hippo.lib.yorozuya.IntIdGenerator;
+import com.hippo.lib.yorozuya.OSUtils;
+import com.hippo.lib.yorozuya.SimpleHandler;
 
 import org.conscrypt.Conscrypt;
 
@@ -119,7 +120,7 @@ public class EhApplication extends RecordingApplication {
     private OkHttpClient mImageOkHttpClient;
     private Cache mOkHttpCache;
     private ImageBitmapHelper mImageBitmapHelper;
-    private Conaco<ImageBitmap> mConaco;
+    private Conaco<Image> mConaco;
     private LruCache<Long, GalleryDetail> mGalleryDetailCache;
     private SimpleDiskCache mSpiderInfoCache;
     private DownloadManager mDownloadManager;
@@ -163,6 +164,9 @@ public class EhApplication extends RecordingApplication {
         });
 
         super.onCreate();
+//        if(BuildConfig.DEBUG){
+//            TooLargeTool.startLogging(this);
+//        }
 
         GetText.initialize(this);
         StatusCodeException.initialize(this);
@@ -175,6 +179,7 @@ public class EhApplication extends RecordingApplication {
         EhEngine.initialize();
         BitmapUtils.initialize(this);
         Image.initialize(this);
+        Native.initialize();
         // 实际作用不确定，但是与64位应用有冲突
 //        A7Zip.loadLibrary(A7ZipExtractLite.LIBRARY, libname -> ReLinker.loadLibrary(EhApplication.this, libname));
         // 64位适配
@@ -284,9 +289,6 @@ public class EhApplication extends RecordingApplication {
                 if (DEBUG_PRINT_NATIVE_MEMORY) {
                     Log.i(TAG, "Native memory: " + FileUtils.humanReadableByteCount(
                             Debug.getNativeHeapAllocatedSize(), false));
-                }
-                if (DEBUG_PRINT_IMAGE_COUNT) {
-                    Log.i(TAG, "Image count: " + Image.getImageCount());
                 }
                 SimpleHandler.getInstance().postDelayed(this, DEBUG_PRINT_INTERVAL);
             }
@@ -507,10 +509,10 @@ public class EhApplication extends RecordingApplication {
     }
 
     @NonNull
-    public static Conaco<ImageBitmap> getConaco(@NonNull Context context) {
+    public static Conaco<Image> getConaco(@NonNull Context context) {
         EhApplication application = ((EhApplication) context.getApplicationContext());
         if (application.mConaco == null) {
-            Conaco.Builder<ImageBitmap> builder = new Conaco.Builder<>();
+            Conaco.Builder<Image> builder = new Conaco.Builder<>();
             builder.hasMemoryCache = true;
             builder.memoryCacheMaxSize = getMemoryCacheMaxSize();
             builder.hasDiskCache = true;

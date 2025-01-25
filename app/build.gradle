@@ -1,6 +1,7 @@
 apply plugin: 'com.android.application'
 apply plugin: "org.jetbrains.kotlin.android"
 apply plugin: "org.jetbrains.kotlin.plugin.parcelize"
+apply plugin: "com.jaredsburrows.license"
 if (file('google-services.json').exists()) {
     apply plugin: 'com.google.gms.google-services'
     apply plugin: 'com.google.firebase.crashlytics'
@@ -10,9 +11,9 @@ if (file('google-services.json').exists()) {
 android {
     namespace 'com.hippo.ehviewer'
     testNamespace 'com.hippo.ehviewer.debug'
-    compileSdkVersion 32
+    compileSdk 34
 //    buildToolsVersion "30.0.3"
-//    ndkVersion '23.1.7779620'
+//    ndkVersion '25.1.8937393'
 
     flavorDimensions "distribute"
     productFlavors {
@@ -30,16 +31,18 @@ android {
         //noinspection ExpiredTargetSdkVersion
         targetSdkVersion 29
         versionCode 111
-        versionName "1.9.8.6"
+        versionName "1.9.9.8"
         vectorDrawables.useSupportLibrary = true
-        resConfigs 'zh', 'zh-rCN', 'zh-rHK', 'zh-rTW', 'es', 'ja', 'ko', 'fr', 'de', 'th'
+        resourceConfigurations += ['zh', 'zh-rCN', 'zh-rHK', 'zh-rTW', 'es', 'ja', 'ko', 'fr', 'de', 'th']
         testOptions.unitTests.includeAndroidResources = true
+        multiDexEnabled true
         ndk {
             moduleName "native-lib"
             abiFilters "armeabi-v7a", "arm64-v8a", "x86", "x86_64"
         }
         externalNativeBuild {
             cmake {
+//                path 'src/main/cpp/CMakeLists.txt'
                 cppFlags ''
             }
         }
@@ -75,8 +78,8 @@ android {
 //    }
 
     compileOptions {
-        sourceCompatibility JavaVersion.VERSION_11
-        targetCompatibility JavaVersion.VERSION_11
+        sourceCompatibility JavaVersion.VERSION_21
+        targetCompatibility JavaVersion.VERSION_21
     }
 
     buildFeatures {
@@ -85,29 +88,15 @@ android {
 
 }
 
-//task copyNotice(type: Copy) {
-//    from '../NOTICE.html'
-//    into './src/main/assets'
-//    finalizedBy ":daogenerator:executeDaoGenerator"
-//}
-
 //tasks.withType(JavaCompile) {
 //    task -> task.dependsOn copyNotice
 //}
 
-clean {
-    delete file('src/main/assets/NOTICE.html').absolutePath
-}
-
 dependencies {
+//    测试工具
+//    debugCompileOnly 'com.gu.android:toolargetool:0.3.0'
 
-    // 应用服务分发
-    def appCenterSdkVersion = '4.4.5'
-    implementation "com.microsoft.appcenter:appcenter-analytics:${appCenterSdkVersion}"
-//    implementation "com.microsoft.appcenter:appcenter-crashes:${appCenterSdkVersion}"
-    implementation "com.microsoft.appcenter:appcenter-distribute:${appCenterSdkVersion}"
-
-    implementation 'com.google.android.material:material:1.4.0'
+    implementation 'com.google.android.material:material:1.12.0'
 
     // app使用情况数据收集
     // Import the BoM for the Firebase platform
@@ -115,22 +104,22 @@ dependencies {
 
     // Add the dependencies for the Crashlytics and Analytics libraries
     // When using the BoM, you don't specify versions in Firebase library dependencies
-//    implementation 'com.google.firebase:firebase-crashlytics'
-//    implementation 'com.google.firebase:firebase-analytics'
-    implementation 'com.google.firebase:firebase-crashlytics:18.3.7'
-    implementation 'com.google.firebase:firebase-analytics:21.3.0'
+    implementation 'com.google.firebase:firebase-crashlytics:19.3.0'
+    implementation 'com.google.firebase:firebase-analytics:22.1.2'
 //    implementation 'com.google.firebase:firebase-analytics:21.5.1'
 
     implementation fileTree(include: ['*.jar'], dir: 'libs')
     implementation "androidx.activity:activity:1.2.4"
-    implementation 'androidx.appcompat:appcompat:1.2.0'
+    implementation 'androidx.appcompat:appcompat:1.7.0'
     implementation 'androidx.biometric:biometric:1.2.0-alpha01'
     implementation "androidx.browser:browser:1.3.0"
     implementation 'androidx.cardview:cardview:1.0.0'
-    implementation "androidx.fragment:fragment:1.3.0-rc01"
-    implementation "androidx.preference:preference:1.0.0"
+    implementation "androidx.fragment:fragment:1.8.5"
+    implementation "androidx.preference:preference-ktx:1.2.1"
     implementation 'androidx.recyclerview:recyclerview:1.2.0'
     implementation 'org.conscrypt:conscrypt-android:2.5.1'
+    // https://mvnrepository.com/artifact/androidx.core/core-ktx
+    implementation 'androidx.core:core-ktx:1.13.1'
 //    implementation 'com.android.support:recyclerview-v7:25.0.1'
 
 //     https://mvnrepository.com/artifact/com.fpliu.ndk.pkg.prefab.android.21/libpng
@@ -140,8 +129,9 @@ dependencies {
     implementation 'com.github.amlcurran.showcaseview:library:5.4.3'
     implementation 'com.github.ybq:Android-SpinKit:1.4.0'
     implementation 'com.alibaba:fastjson:1.2.83'
-//    implementation 'com.alibaba.fastjson2:fastjson2:2.0.47'
 
+    implementation 'com.android.support:multidex:1.0.3'
+//    implementation 'com.github.bumptech.glide:glide:4.16.0'
     /**
      * 原始依赖
      */
@@ -151,8 +141,8 @@ dependencies {
     implementation 'com.github.seven332:animator:0.1.0'
 //    implementation 'com.github.seven332:beerbelly:0.2.0'
 //    implementation 'com.github.seven332:conaco:0.2.0'
-    implementation 'com.github.seven332:beerbelly:0.1.4'
-    implementation 'com.github.seven332:conaco:0.1.5-eh'
+//    implementation 'com.github.seven332:beerbelly:0.1.4'
+//    implementation 'com.github.seven332:conaco:0.1.5-eh'
     implementation 'com.github.seven332:drawerlayout:ea2bb388f0'
     implementation 'com.github.seven332:easyrecyclerview:0.1.1'
 //    分页组件
@@ -160,18 +150,18 @@ dependencies {
 //    implementation 'com.github.xiaojieonly:Pagination_Sxj:d8253ceefd6b02b73f9e9485cbb7dd89a6b89ba3'
 //    为方便扩展代码直接迁移至项目内
 //    implementation 'com.github.seven332:glgallery:0.1.2'
-    implementation 'com.github.seven332:glview:0.1.0'
-    implementation 'com.github.seven332:glview-image:0.1.0'
+//    implementation 'com.github.seven332:glview:0.1.0'
+//    implementation 'com.github.seven332:glview-image:0.1.0'
+//    implementation 'com.github.seven332:image:0.1.12'
     implementation 'com.github.seven332:hotspot:0.1.0'
-    implementation 'com.github.seven332:image:0.1.12'
     implementation 'com.github.seven332:refreshlayout:0.1.0'
     implementation 'com.github.seven332:ripple:0.1.2'
     implementation 'com.github.seven332:streampipe:0.1.0'
-    implementation 'com.github.seven332:tuxiang:0.1.6'
-    implementation 'com.github.seven332:unifile:9ec57bcd8f'
-    implementation 'com.github.seven332:yorozuya:0.1.2'
-    implementation 'com.github.seven332:yorozuya-thread:0.1.1'
-    implementation 'com.github.seven332:yorozuya-collect:0.1.4'
+//    implementation 'com.github.seven332:tuxiang:0.1.6'
+//    implementation 'com.github.seven332:unifile:9ec57bcd8f'
+//    implementation 'com.github.seven332:yorozuya:0.1.2'
+//    implementation 'com.github.seven332:yorozuya-thread:0.1.1'
+//    implementation 'com.github.seven332:yorozuya-collect:0.1.4'
 
 
     implementation 'com.h6ah4i.android.widget.advrecyclerview:advrecyclerview:1.0.0'
@@ -200,11 +190,11 @@ dependencies {
     testImplementation 'org.jooq:joor:0.9.6'
 
     // https://mvnrepository.com/artifact/androidx.webkit/webkit
-    runtimeOnly group: 'androidx.webkit', name: 'webkit', version: '1.4.0'
+    runtimeOnly group: 'androidx.webkit', name: 'webkit', version: '1.12.1'
 
 }
 
-configurations.all {
+configurations.configureEach {
     resolutionStrategy {
         force 'com.github.seven332:glgallery:25893283ca'
         force 'com.github.seven332:glview:ba6aee61d7'

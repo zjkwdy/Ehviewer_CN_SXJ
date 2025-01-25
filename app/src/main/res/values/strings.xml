@@ -174,7 +174,7 @@
     <string name="app_waring">The content of this application is from the Internet. Some of it may do physical or mental harm to you. You have learnt the risks above and would like to undertake them.</string>
     <string name="error_username_cannot_empty">Username cannot be an empty string</string>
     <string name="error_password_cannot_empty">Password cannot be an empty string</string>
-    <string name="skip_signing_in">Continue without signing in</string>
+    <string name="guest_mode">继续访客模式</string>
     <string name="sign_in_failed">Sign in failed</string>
     <string name="sign_in_failed_tip">If this issue continues, try \"Sign in via WebView\" or \"Sign in via cookies\"</string>
     <string name="sign_in_failed_plain">Perhaps it is a mistake due to website update or something wrong happened. You may try sign in via WebView or enter cookie or skip signing in under sign in button. But you may be a "Sad Panda" after skipping signing in. Try "Sign in via cookies" first if you had signed in on 0.6.x version.</string>
@@ -197,9 +197,11 @@
     <!-- Update -->
     <string name="new_version">New version</string>
     <string name="update">Update</string>
+    <string name="update_fail">Check for updates failed</string>
     <string name="update_to">Update to</string>
     <string name="no_updates_available">Already the latest version</string>
     <string name="update_plain">Version: %1$s\nSize: %2$s\n\n%3$s</string>
+    <string name="update_fail_info">Click Yes to jump to Github homepage</string>
     <string name="update_to_date">You are using the latest version of EhViewer.</string>
     <string name="update_ignore">Ignore</string>
 
@@ -543,8 +545,8 @@
     <string name="settings_eh_sign_out_tip">You have signed out. Restart the application to sign in again</string>
     <string name="settings_eh_identity_cookies">Identity cookies</string>
     <string name="settings_eh_identity_cookies_summary">Cookies can be used to sign in</string>
-    <string name="settings_eh_lock_cookies_igneous">Lock the Cookie igneous field</string>
-    <string name="settings_eh_lock_cookies_igneous_summary">It is not recommended to enable it except in special circumstances.</string>
+<!--    <string name="settings_eh_lock_cookies_igneous">Lock the Cookie igneous field</string>-->
+<!--    <string name="settings_eh_lock_cookies_igneous_summary">It is not recommended to enable it except in special circumstances.</string>-->
     <string name="settings_eh_identity_cookies_signed">Identity cookies can be used to sign in to this account.&lt;br&gt;&lt;b&gt;KEEP IT SAFE&lt;/b&gt;&lt;br&gt;&lt;br&gt;%s</string>
     <string name="settings_eh_identity_cookies_tourist">Not signed in.</string>
     <string name="settings_eh_identity_cookies_copy">Copy</string>
@@ -909,7 +911,6 @@
     <string name="open_directory">Open Directory</string>
     <string name="downloading">Downloading…… Please Try Later</string>
     <string name="torrent_exist">File already exists</string>
-    <string name="empty_subscription">Subscription is empty</string>
 
     <!--  订阅服务  -->
     <string name="subscription_watched">Watched</string>
@@ -918,6 +919,8 @@
     <string name="can_not_use_this_tag">Tags are not available</string>
     <string name="add_tag_dialog_title">Add Tag</string>
     <string name="tag_title">Tag</string>
+    <string name="empty_subscription">Subscription is empty</string>
+    <string name="subscription_success">%s success</string>
 
     <string name="yes">Yes</string>
     <string name="cancel">Cancel</string>
@@ -996,5 +999,10 @@
     <string name="add_widget">Add widget</string>
     <string name="app_widget_description">This is an app widget description</string>
     <string name="archiver_downloading">Arc Downloading %s</string>
+    <string name="order">Order</string>
+    <string name="sort_by_pub_time">Published Time</string>
+    <string name="sort_by_fav_time">Favorited Time</string>
+    <string name="settings_eh_sign_out_restart">Automatically restarting for you, please wait</string>
+
 
 </resources>

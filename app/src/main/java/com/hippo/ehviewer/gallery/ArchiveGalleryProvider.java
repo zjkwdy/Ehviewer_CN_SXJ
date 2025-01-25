@@ -17,19 +17,26 @@
 package com.hippo.ehviewer.gallery;
 
 import android.content.Context;
+import android.graphics.Bitmap;
+import android.graphics.BitmapFactory;
+import android.graphics.drawable.BitmapDrawable;
+import android.graphics.drawable.Drawable;
 import android.net.Uri;
 import android.os.Process;
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
 import com.hippo.a7zip.ArchiveException;
+import com.hippo.ehviewer.EhApplication;
 import com.hippo.ehviewer.GetText;
 import com.hippo.ehviewer.R;
 import com.hippo.lib.glgallery.GalleryPageView;
-import com.hippo.image.Image;
+import com.hippo.lib.image.Image;
 import com.hippo.unifile.UniFile;
 import com.hippo.unifile.UniRandomAccessFile;
 import com.hippo.util.NaturalComparator;
-import com.hippo.yorozuya.thread.PriorityThread;
+import com.hippo.lib.yorozuya.thread.PriorityThread;
+
+import java.io.FileInputStream;
 import java.io.IOException;
 import java.io.InputStream;
 import java.util.Collections;
@@ -258,7 +265,14 @@ public class ArchiveGalleryProvider extends GalleryProvider2 {
         }
 
         try {
-          Image image = Image.decode(stream, true);
+//          BitmapFactory.Options option = new BitmapFactory.Options();
+//          if (stream.available()>40960){
+//            option.inSampleSize = 4;
+//          }
+//          Bitmap bitmap = BitmapFactory.decodeStream(stream,null,option);
+//          BitmapDrawable drawable = new BitmapDrawable(EhApplication.getInstance().getResources(),bitmap);
+//          Image image = Image.decode(drawable, false);
+          Image image = Image.decode(BitmapDrawable.createFromStream(stream,null), false);
           if (image != null) {
             notifyPageSucceed(index, image);
           } else {

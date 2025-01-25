@@ -46,9 +46,9 @@ import com.hippo.refreshlayout.RefreshLayout;
 import com.hippo.util.DrawableManager;
 import com.hippo.util.ExceptionUtils;
 import com.hippo.view.ViewTransition;
-import com.hippo.yorozuya.IntIdGenerator;
-import com.hippo.yorozuya.LayoutUtils;
-import com.hippo.yorozuya.collect.IntList;
+import com.hippo.lib.yorozuya.IntIdGenerator;
+import com.hippo.lib.yorozuya.LayoutUtils;
+import com.hippo.lib.yorozuya.collect.IntList;
 
 import java.util.ArrayList;
 import java.util.Collections;
@@ -88,13 +88,13 @@ public class ContentLayout extends FrameLayout {
     private void init(Context context) {
         LayoutInflater.from(context).inflate(R.layout.widget_content_layout, this);
 
-        mProgressView = (ProgressView) findViewById(R.id.progress);
-        mTipView = (TextView) findViewById(R.id.tip);
-        mContentView = (ViewGroup) findViewById(R.id.content_view);
+        mProgressView = findViewById(R.id.progress);
+        mTipView = findViewById(R.id.tip);
+        mContentView = findViewById(R.id.content_view);
 
-        mRefreshLayout = (RefreshLayout) mContentView.findViewById(R.id.refresh_layout);
-        mFastScroller = (FastScroller) mContentView.findViewById(R.id.fast_scroller);
-        mRecyclerView = (EasyRecyclerView) mRefreshLayout.findViewById(R.id.recycler_view);
+        mRefreshLayout = mContentView.findViewById(R.id.refresh_layout);
+        mFastScroller = mContentView.findViewById(R.id.fast_scroller);
+        mRecyclerView = mRefreshLayout.findViewById(R.id.recycler_view);
 
         mFastScroller.attachToRecyclerView(mRecyclerView);
         HandlerDrawable drawable = new HandlerDrawable();
@@ -378,6 +378,8 @@ public class ContentLayout extends FrameLayout {
          * @param page   the page to get
          */
         protected abstract void getPageData(int taskId, int type, int page);
+
+        protected abstract void getPageData(int taskId, int type, int page,String append);
 
         protected abstract void getExPageData(int pageAction, int taskId, int page);
 
@@ -970,6 +972,14 @@ public class ContentLayout extends FrameLayout {
         public void refresh() {
             showProgressBar();
             doRefresh();
+        }
+
+        public void refreshSort(String sort) {
+            showProgressBar();
+            mCurrentTaskId = mIdGenerator.nextId();
+            mCurrentTaskType = TYPE_REFRESH;
+            mCurrentTaskPage = 0;
+            getPageData(mCurrentTaskId, mCurrentTaskType, mCurrentTaskPage,sort);
         }
 
         protected void cancelCurrentTask() {

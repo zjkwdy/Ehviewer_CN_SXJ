@@ -82,7 +82,7 @@
 
     <string name="app_waring">El contenido de esta aplicación es de Internet. Algunas de ellas pueden causarle daño psicológico. Ahora sabes los riesgos anteriormente mencionado y te gustaría asumirlos</string>
     <string name="error_username_cannot_empty">El usuario no puede estar vacío</string>
-    <string name="skip_signing_in">Saltar inicio de sesión</string>
+    <string name="guest_mode">Modo invitado</string>
     <string name="sign_in_failed">Inicio de sesión fallido</string>
     <string name="sign_in_failed_plain">Tal ves sea debido a un error de actualización de el sitio web o algo mal sucedió. Puedes intentar iniciar sesión vía WebView, ingresar una cookie o saltar el inicio de sesión presionando el botón de abajo.\nEs posible que te salga un \"Panda Triste\" después de saltar el inicio de sesión. Intente \"Ingresar vía cookies\" primero si ha iniciado sesión en la versión 0.6.x de HeViewer.</string>
     <string name="press_twice_exit">Presione una vez más para salir</string>
@@ -101,7 +101,9 @@
 
     <!-- Update -->
     <string name="update">Actualizar</string>
+    <string name="update_fail">Check for updates failed</string>
     <string name="update_plain">Versión: %1$s\nSize: %2$s\n\n%3$s</string>
+    <string name="update_fail_info">Click Yes to jump to Github homepage</string>
     <string name="update_to_date">EhViewer está actualizado</string>
     <string name="no_updates_available">Ya es la última versión</string>
 
@@ -686,5 +688,18 @@
     <string name="settings_download_timeout_summary">%s(S),Maximum time allowed to download an image.</string>
     <string name="have_new_version">Click to see new gallery version</string>
     <string name="archiver_downloading">Arc Downloading %s</string>
+    <string name="order">Order</string>
+    <string name="sort_by_pub_time">Published Time</string>
+    <string name="sort_by_fav_time">Favorited Time</string>
+    <string name="settings_eh_sign_out_restart">Automatically restarting for you, please wait</string>
+    <!--  订阅服务  -->
+    <string name="subscription_watched">Watched</string>
+    <string name="subscription_hidden">Hidden</string>
+    <string name="delete_subscription_title">Remove Tag</string>
+    <string name="can_not_use_this_tag">Tags are not available</string>
+    <string name="add_tag_dialog_title">Add Tag</string>
+    <string name="tag_title">Tag</string>
+    <string name="empty_subscription">Subscription is empty</string>
+    <string name="subscription_success">%s success</string>
 
 </resources>

@@ -43,6 +43,7 @@ import android.view.LayoutInflater;
 import android.view.MotionEvent;
 import android.view.View;
 import android.view.Window;
+import android.view.WindowInsets;
 import android.view.WindowManager;
 import android.webkit.MimeTypeMap;
 import android.widget.CompoundButton;
@@ -54,11 +55,14 @@ import android.widget.TextView;
 import android.widget.Toast;
 
 import androidx.activity.result.ActivityResult;
-import androidx.activity.result.contract.ActivityResultContracts;
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
 import androidx.appcompat.app.AlertDialog;
 import androidx.appcompat.widget.SwitchCompat;
+import androidx.core.view.ViewCompat;
+import androidx.core.view.WindowCompat;
+import androidx.core.view.WindowInsetsCompat;
+import androidx.core.view.WindowInsetsControllerCompat;
 
 import com.hippo.android.resource.AttrResources;
 import com.hippo.ehviewer.AppConfig;
@@ -76,19 +80,19 @@ import com.hippo.ehviewer.widget.ReversibleSeekBar;
 import com.hippo.lib.glgallery.GalleryProvider;
 import com.hippo.lib.glgallery.GalleryView;
 import com.hippo.lib.glgallery.SimpleAdapter;
-import com.hippo.glview.view.GLRootView;
+import com.hippo.lib.glview.view.GLRootView;
 import com.hippo.unifile.UniFile;
 import com.hippo.util.ExceptionUtils;
 import com.hippo.util.SystemUiHelper;
 import com.hippo.widget.ColorView;
-import com.hippo.yorozuya.AnimationUtils;
-import com.hippo.yorozuya.ConcurrentPool;
-import com.hippo.yorozuya.IOUtils;
-import com.hippo.yorozuya.MathUtils;
-import com.hippo.yorozuya.ResourcesUtils;
-import com.hippo.yorozuya.SimpleAnimatorListener;
-import com.hippo.yorozuya.SimpleHandler;
-import com.hippo.yorozuya.ViewUtils;
+import com.hippo.lib.yorozuya.AnimationUtils;
+import com.hippo.lib.yorozuya.ConcurrentPool;
+import com.hippo.lib.yorozuya.IOUtils;
+import com.hippo.lib.yorozuya.MathUtils;
+import com.hippo.lib.yorozuya.ResourcesUtils;
+import com.hippo.lib.yorozuya.SimpleAnimatorListener;
+import com.hippo.lib.yorozuya.SimpleHandler;
+import com.hippo.lib.yorozuya.ViewUtils;
 
 import org.greenrobot.eventbus.EventBus;
 import org.greenrobot.eventbus.Subscribe;
@@ -388,9 +392,12 @@ public class GalleryActivity extends EhActivity implements SeekBar.OnSeekBarChan
 
         // System UI helper
         if (Settings.getReadingFullscreen()) {
-            int systemUiLevel;
-            systemUiLevel = SystemUiHelper.LEVEL_IMMERSIVE;
-            mSystemUiHelper = new SystemUiHelper(this, systemUiLevel,
+            Window w = getWindow();
+            w.setFlags(WindowManager.LayoutParams.FLAG_TRANSLUCENT_NAVIGATION,
+                    WindowManager.LayoutParams.FLAG_TRANSLUCENT_NAVIGATION);
+            w.setFlags(WindowManager.LayoutParams.FLAG_TRANSLUCENT_STATUS,
+                    WindowManager.LayoutParams.FLAG_TRANSLUCENT_STATUS);
+            mSystemUiHelper = new SystemUiHelper(this, SystemUiHelper.LEVEL_IMMERSIVE,
                     SystemUiHelper.FLAG_LAYOUT_IN_SCREEN_OLDER_DEVICES | SystemUiHelper.FLAG_IMMERSIVE_STICKY);
             mSystemUiHelper.hide();
             mShowSystemUi = false;
@@ -656,7 +663,7 @@ public class GalleryActivity extends EhActivity implements SeekBar.OnSeekBarChan
             long initialDelay = Settings.getStartTransferTime();
             long waitTime = initialDelay * 2L;
             try {
-                transferService.scheduleAtFixedRate(
+                transferService.scheduleWithFixedDelay(
                         () -> transHandle.post(() -> {
                             if (mGalleryView == null) {
                                 return;

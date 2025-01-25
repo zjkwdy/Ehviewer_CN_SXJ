@@ -48,7 +48,6 @@ import android.widget.Toast;
 import androidx.activity.result.ActivityResult;
 import androidx.activity.result.ActivityResultLauncher;
 import androidx.activity.result.contract.ActivityResultContracts;
-import androidx.annotation.IntDef;
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
 import androidx.appcompat.app.AlertDialog;
@@ -95,10 +94,10 @@ import com.hippo.ehviewer.ui.scene.ToolbarScene;
 import com.hippo.ehviewer.ui.scene.TransitionNameFactory;
 import com.hippo.ehviewer.ui.scene.gallery.detail.GalleryDetailScene;
 import com.hippo.ehviewer.ui.scene.gallery.list.EnterGalleryDetailTransaction;
-import com.hippo.ehviewer.ui.scene.gallery.list.GalleryListScene;
 import com.hippo.ehviewer.widget.SearchBar;
 import com.hippo.ehviewer.widget.SimpleRatingView;
 import com.hippo.io.UniFileInputStreamPipe;
+import com.hippo.lib.yorozuya.IOUtils;
 import com.hippo.ripple.Ripple;
 import com.hippo.scene.Announcer;
 import com.hippo.streampipe.InputStreamPipe;
@@ -111,14 +110,11 @@ import com.hippo.widget.LoadImageView;
 import com.hippo.widget.ProgressView;
 import com.hippo.widget.SearchBarMover;
 import com.hippo.widget.recyclerview.AutoStaggeredGridLayoutManager;
-import com.hippo.yorozuya.AnimationUtils;
-import com.hippo.yorozuya.AssertUtils;
-import com.hippo.yorozuya.FileUtils;
-import com.hippo.yorozuya.IOUtils;
-import com.hippo.yorozuya.ObjectUtils;
-import com.hippo.yorozuya.SimpleAnimatorListener;
-import com.hippo.yorozuya.ViewUtils;
-import com.hippo.yorozuya.collect.LongList;
+import com.hippo.lib.yorozuya.AssertUtils;
+import com.hippo.lib.yorozuya.FileUtils;
+import com.hippo.lib.yorozuya.ObjectUtils;
+import com.hippo.lib.yorozuya.ViewUtils;
+import com.hippo.lib.yorozuya.collect.LongList;
 import com.sxj.paginationlib.PaginationIndicator;
 import com.google.firebase.crashlytics.FirebaseCrashlytics;
 
@@ -129,8 +125,6 @@ import org.greenrobot.eventbus.ThreadMode;
 import java.io.IOException;
 import java.io.InputStream;
 import java.io.OutputStream;
-import java.lang.annotation.Retention;
-import java.lang.annotation.RetentionPolicy;
 import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.LinkedList;
@@ -241,7 +235,7 @@ public class DownloadsScene extends ToolbarScene
         }
 
         if (ACTION_CLEAR_DOWNLOAD_SERVICE.equals(args.getString(KEY_ACTION))) {
-            DownloadService.clear();
+            DownloadService.Companion.clear();
         }
 
         long gid;
@@ -1661,8 +1655,8 @@ public class DownloadsScene extends ToolbarScene
 
                 String title = EhUtils.getSuitableTitle(info);
 
-                holder.thumb.load(EhCacheKeyFactory.getThumbKey(info.gid), info.thumb,
-                        new ThumbDataContainer(info), true);
+//                holder.thumb.load(EhCacheKeyFactory.getThumbKey(info.gid), info.thumb, true);
+                holder.thumb.load(EhCacheKeyFactory.getThumbKey(info.gid), info.thumb, new ThumbDataContainer(info), true);
 
                 holder.title.setText(title);
                 holder.uploader.setText(info.uploader);

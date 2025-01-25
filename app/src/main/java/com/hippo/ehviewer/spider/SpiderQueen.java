@@ -16,13 +16,10 @@
 
 package com.hippo.ehviewer.spider;
 
-import static com.hippo.ehviewer.spider.SpiderDen.generateImageFilename;
-
 import android.annotation.SuppressLint;
 import android.content.Context;
 import android.graphics.BitmapFactory;
 import android.os.AsyncTask;
-import android.os.CountDownTimer;
 import android.os.Process;
 import android.text.TextUtils;
 import android.util.Log;
@@ -53,24 +50,24 @@ import com.hippo.ehviewer.client.parser.GalleryPageUrlParser;
 import com.hippo.ehviewer.gallery.GalleryProvider2;
 import com.hippo.lib.glgallery.GalleryPageView;
 import com.hippo.lib.glgallery.GalleryProvider;
-import com.hippo.image.Image;
+import com.hippo.lib.image.Image;
 import com.hippo.streampipe.InputStreamPipe;
 import com.hippo.streampipe.OutputStreamPipe;
 import com.hippo.unifile.UniFile;
 import com.hippo.util.ExceptionUtils;
-import com.hippo.util.FileUtils;
 import com.hippo.util.IoThreadPoolExecutor;
-import com.hippo.yorozuya.IOUtils;
-import com.hippo.yorozuya.MathUtils;
-import com.hippo.yorozuya.OSUtils;
-import com.hippo.yorozuya.StringUtils;
-import com.hippo.yorozuya.Utilities;
-import com.hippo.yorozuya.collect.SparseJLArray;
-import com.hippo.yorozuya.thread.PriorityThread;
-import com.hippo.yorozuya.thread.PriorityThreadFactory;
+import com.hippo.lib.yorozuya.IOUtils;
+import com.hippo.lib.yorozuya.MathUtils;
+import com.hippo.lib.yorozuya.OSUtils;
+import com.hippo.lib.yorozuya.StringUtils;
+import com.hippo.lib.yorozuya.Utilities;
+import com.hippo.lib.yorozuya.collect.SparseJLArray;
+import com.hippo.lib.yorozuya.thread.PriorityThread;
+import com.hippo.lib.yorozuya.thread.PriorityThreadFactory;
 import com.google.firebase.crashlytics.FirebaseCrashlytics;
 
 import java.io.BufferedInputStream;
+import java.io.FileInputStream;
 import java.io.IOException;
 import java.io.InputStream;
 import java.io.OutputStream;
@@ -1375,6 +1372,9 @@ public final class SpiderQueen implements Runnable {
                     MediaType mediaType = responseBody.contentType();
                     if (mediaType != null) {
                         extension = MimeTypeMap.getSingleton().getExtensionFromMimeType(mediaType.toString());
+                        if (extension != null&&!extension.contains(".")){
+                            extension= "."+extension;
+                        }
                     }
                     // Ensure extension
                     if (!Utilities.contain(GalleryProvider2.SUPPORT_IMAGE_EXTENSIONS, extension)) {
@@ -1784,7 +1784,7 @@ public final class SpiderQueen implements Runnable {
 
                 pipe.obtain();
                 try {
-                    is = new AutoCloseInputStream(pipe, pipe.open());
+                    is = pipe.open();
                 } catch (IOException e) {
                     // Can't open pipe
                     error = GetText.getString(R.string.error_reading_failed);
@@ -1794,7 +1794,18 @@ public final class SpiderQueen implements Runnable {
                 }
 
                 if (is != null) {
-                    image = Image.decode(is, true);
+                    try {
+                        image = Image.decode((FileInputStream) is, false);
+                    }catch (OutOfMemoryError e){
+                        FirebaseCrashlytics.getInstance().recordException(e);
+                    }finally {
+                        try {
+                            is.close();
+                        } catch (IOException e) {
+                            Log.e(TAG, "解码失败", e);
+                            FirebaseCrashlytics.getInstance().recordException(e);
+                        }
+                    }
                     if (image == null) {
                         error = GetText.getString(R.string.error_decoding_failed);
                     }

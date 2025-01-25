@@ -34,19 +34,19 @@ import com.alibaba.fastjson.JSONObject;
 import com.hippo.ehviewer.client.EhConfig;
 import com.hippo.ehviewer.client.EhUtils;
 import com.hippo.ehviewer.client.data.FavListUrlBuilder;
-import com.hippo.ehviewer.client.data.GalleryDetail;
 import com.hippo.ehviewer.client.data.GalleryInfo;
 import com.hippo.ehviewer.ui.CommonOperations;
 import com.hippo.ehviewer.ui.scene.gallery.list.GalleryListScene;
 import com.hippo.lib.glgallery.GalleryView;
 import com.hippo.unifile.UniFile;
 import com.hippo.util.ExceptionUtils;
-import com.hippo.yorozuya.AssertUtils;
-import com.hippo.yorozuya.FileUtils;
-import com.hippo.yorozuya.MathUtils;
-import com.hippo.yorozuya.NumberUtils;
+import com.hippo.lib.yorozuya.AssertUtils;
+import com.hippo.lib.yorozuya.FileUtils;
+import com.hippo.lib.yorozuya.MathUtils;
+import com.hippo.lib.yorozuya.NumberUtils;
 
 import java.io.File;
+import java.util.Date;
 import java.util.Locale;
 
 public class Settings {
@@ -792,6 +792,9 @@ public class Settings {
     }
 
     public static void putImageResolution(String value) {
+        if(null==value||null==sEhConfig){
+            return;
+        }
         sEhConfig.imageSize = value;
         sEhConfig.setDirty();
         putString(KEY_IMAGE_RESOLUTION, value);
@@ -1349,24 +1352,24 @@ public class Settings {
     }
 
 
-    public static final String KEY_LOCK_COOKIE_IGNEOUS = "lock_cookie_igneous";
-
-    private static boolean IS_LOCK_COOKIE_IGNEOUS = false;
-
-    public static boolean getLockCookieIgneous() {
-        return getBoolean(KEY_LOCK_COOKIE_IGNEOUS, IS_LOCK_COOKIE_IGNEOUS) ;
-    }
-
-    public static void setLockCookieIgneous(boolean value) {
-        putBoolean(KEY_LOCK_COOKIE_IGNEOUS, value);
-    }
+//    public static final String KEY_LOCK_COOKIE_IGNEOUS = "lock_cookie_igneous";
+//
+//    private static boolean IS_LOCK_COOKIE_IGNEOUS = false;
+//
+//    public static boolean getLockCookieIgneous() {
+//        return getBoolean(KEY_LOCK_COOKIE_IGNEOUS, IS_LOCK_COOKIE_IGNEOUS) ;
+//    }
+//
+//    public static void setLockCookieIgneous(boolean value) {
+//        putBoolean(KEY_LOCK_COOKIE_IGNEOUS, value);
+//    }
 
     public static final String USER_BACKGROUND_IMAGE = "background_image_path";
     public static final String USER_AVATAR_IMAGE = "avatar_image_path";
 
     public static File getUserImageFile(String key){
         String path = getString(key,"");
-        if (path.equals("")){
+        if (path.isEmpty()){
             return null;
         }
         File file = new File(path);
@@ -1383,10 +1386,8 @@ public class Settings {
 
     public static final String KEY_DOWNLOAD_ORDER_ASC = "download_order_asc";
 
-    private static boolean IS_DOWNLOAD_ORDER_ASC = true;
-
     public static boolean getDownloadOrder() {
-        return getBoolean(KEY_DOWNLOAD_ORDER_ASC, IS_DOWNLOAD_ORDER_ASC) ;
+        return getBoolean(KEY_DOWNLOAD_ORDER_ASC, true) ;
     }
 
     public static void setDownloadOrder(boolean value) {
@@ -1447,4 +1448,20 @@ public class Settings {
         putIntToStr(KEY_DOWNLOAD_TIMEOUT, value);
     }
 
+    public static final String KEY_LAST_UPDATE_TIME = "last_update_time";
+
+    public static long DEFAULT_LAST_UPDATE_TIME = 0L;
+
+    public static boolean getIsUpdateTime() {
+        long lastUpdateTime = getLong(KEY_LAST_UPDATE_TIME, DEFAULT_LAST_UPDATE_TIME);
+        Date now = new Date();
+        long nowTime = now.getTime();
+        long msNum = nowTime - lastUpdateTime;
+        long dayNum = msNum / (1000 * 60 * 60 * 24);
+        return dayNum >= 1;
+    }
+
+    public static void putUpdateTime(long updateTime) {
+        putLong(KEY_LAST_UPDATE_TIME,updateTime);
+    }
 }

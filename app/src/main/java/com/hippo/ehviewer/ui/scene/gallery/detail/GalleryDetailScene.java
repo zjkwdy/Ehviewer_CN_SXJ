@@ -16,6 +16,8 @@
 
 package com.hippo.ehviewer.ui.scene.gallery.detail;
 
+import static com.hippo.ehviewer.client.EhConfig.TORRENT_PATH;
+
 import android.annotation.SuppressLint;
 import android.app.Activity;
 import android.app.Dialog;
@@ -85,6 +87,7 @@ import com.hippo.ehviewer.client.data.GalleryTagGroup;
 import com.hippo.ehviewer.client.data.ListUrlBuilder;
 import com.hippo.ehviewer.client.data.PreviewSet;
 import com.hippo.ehviewer.client.data.TorrentDownloadMessage;
+import com.hippo.ehviewer.client.data.userTag.UserTagList;
 import com.hippo.ehviewer.client.exception.NoHAtHClientException;
 import com.hippo.ehviewer.client.parser.RateGalleryParser;
 import com.hippo.ehviewer.dao.DownloadInfo;
@@ -101,11 +104,10 @@ import com.hippo.ehviewer.ui.scene.FavoritesScene;
 import com.hippo.ehviewer.ui.scene.GalleryCommentsScene;
 import com.hippo.ehviewer.ui.scene.GalleryInfoScene;
 import com.hippo.ehviewer.ui.scene.GalleryPreviewsScene;
-import com.hippo.ehviewer.ui.scene.gallery.list.EnterGalleryDetailTransaction;
+import com.hippo.ehviewer.ui.scene.gallery.list.GalleryListSceneDialog;
 import com.hippo.ehviewer.ui.scene.history.HistoryScene;
 import com.hippo.ehviewer.ui.scene.TransitionNameFactory;
 import com.hippo.ehviewer.ui.scene.gallery.list.GalleryListScene;
-import com.hippo.ehviewer.util.AppCenterAnalytics;
 import com.hippo.ehviewer.util.ClipboardUtil;
 import com.hippo.ehviewer.widget.ArchiverDownloadProgress;
 import com.hippo.ehviewer.widget.GalleryRatingBar;
@@ -128,11 +130,11 @@ import com.hippo.widget.LoadImageView;
 import com.hippo.widget.ObservedTextView;
 import com.hippo.widget.ProgressView;
 import com.hippo.widget.SimpleGridAutoSpanLayout;
-import com.hippo.yorozuya.AssertUtils;
-import com.hippo.yorozuya.IOUtils;
-import com.hippo.yorozuya.IntIdGenerator;
-import com.hippo.yorozuya.SimpleHandler;
-import com.hippo.yorozuya.ViewUtils;
+import com.hippo.lib.yorozuya.AssertUtils;
+import com.hippo.lib.yorozuya.IOUtils;
+import com.hippo.lib.yorozuya.IntIdGenerator;
+import com.hippo.lib.yorozuya.SimpleHandler;
+import com.hippo.lib.yorozuya.ViewUtils;
 import com.google.firebase.crashlytics.FirebaseCrashlytics;
 
 import com.hippo.ehviewer.spider.SpiderQueen;
@@ -320,8 +322,8 @@ public class GalleryDetailScene extends BaseScene implements View.OnClickListene
     private View torrentDownloadView;
     @Nullable
     private TextView downloadProgress;
-
     private GalleryUpdateDialog myUpdateDialog;
+    private GalleryListSceneDialog tagDialog;
     @Nullable
     private Handler torrentDownloadHandler = null;
 
@@ -331,6 +333,7 @@ public class GalleryDetailScene extends BaseScene implements View.OnClickListene
     private MainActivity activity;
 
     private ExecutorService executorService;
+    private EhTagDatabase ehTags;
 
     private final Handler handler = new Handler(Looper.getMainLooper());
 
@@ -460,7 +463,6 @@ public class GalleryDetailScene extends BaseScene implements View.OnClickListene
             properties = new HashMap<>();
             properties.put("Title", mGalleryInfo.title);
             properties.put("Time", dateFormat.format(date));
-            AppCenterAnalytics.trackEvent("进入画廊详情页", properties);
         }
 
         torrentDownloadHandler = new TorrentDownloadHandler();
@@ -1086,7 +1088,7 @@ public class GalleryDetailScene extends BaseScene implements View.OnClickListene
             mNoTags.setVisibility(View.GONE);
         }
 
-        EhTagDatabase ehTags = Settings.getShowTagTranslations() ? EhTagDatabase.getInstance(context) : null;
+        ehTags = Settings.getShowTagTranslations() ? EhTagDatabase.getInstance(context) : null;
 
         int colorTag = AttrResources.getAttrColor(context, R.attr.tagBackgroundColor);
         int colorName = AttrResources.getAttrColor(context, R.attr.tagGroupBackgroundColor);
@@ -1604,42 +1606,20 @@ public class GalleryDetailScene extends BaseScene implements View.OnClickListene
     }
 
     private void showTagDialog(final String tag) {
-        final Context context = getEHContext();
-        if (null == context) {
-            return;
+        if (tagDialog==null){
+            tagDialog = new GalleryListSceneDialog(this);
         }
-        String temp;
-        int index = tag.indexOf(':');
-        if (index >= 0) {
-            temp = tag.substring(index + 1);
-        } else {
-            temp = tag;
+        if (ehTags == null) {
+            ehTags = EhTagDatabase.getInstance(mContext);
         }
-        final String tag2 = temp;
-
-        new AlertDialog.Builder(context)
-                .setTitle(tag)
-                .setItems(R.array.tag_menu_entries, (dialog, which) -> {
-                    switch (which) {
-                        case 0:
-                            UrlOpener.openUrl(context, EhUrl.getTagDefinitionUrl(tag2), false);
-                            break;
-                        case 1:
-                            showFilterTagDialog(tag);
-                            break;
-                    }
-                })
-                .setNegativeButton(R.string.copy_tag, (dialog, which) -> copyTag(tag))
-                .show();
+        tagDialog.setTagName(tag);
+        tagDialog.showTagLongPressDialog(ehTags);
     }
 
-    private void copyTag(String tag) {
-        Context context = requireContext();
-        ClipboardManager manager = (ClipboardManager) context.getSystemService(Context.CLIPBOARD_SERVICE);
-        manager.setPrimaryClip(ClipData.newPlainText(null, tag));
-        Toast.makeText(context, R.string.gallery_tag_copy, Toast.LENGTH_LONG).show();
+    @Override
+    public void setTagList(UserTagList result) {
+        super.setTagList(result);
     }
-
 
     @Override
     public boolean onLongClick(View v) {
@@ -2323,7 +2303,7 @@ public class GalleryDetailScene extends BaseScene implements View.OnClickListene
             try {
                 String url = mTorrentList[position].first;
                 String name = mTorrentList[position].second + ".torrent";
-                String path = Environment.getExternalStoragePublicDirectory(Environment.DIRECTORY_DOWNLOADS).getPath();
+                String path = Environment.getExternalStoragePublicDirectory(Environment.DIRECTORY_DOWNLOADS).getPath()+"/"+TORRENT_PATH;
                 DownloadTorrentManager downloadTorrentManager = DownloadTorrentManager.get(okHttpClient);
                 if (!EhApplication.addDownloadTorrent(context, url)) {
                     Toast.makeText(context, R.string.downloading, Toast.LENGTH_LONG).show();

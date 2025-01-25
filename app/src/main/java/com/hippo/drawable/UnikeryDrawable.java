@@ -16,18 +16,19 @@
 
 package com.hippo.drawable;
 
+import android.graphics.drawable.AnimatedImageDrawable;
+import android.graphics.drawable.AnimationDrawable;
 import android.graphics.drawable.Drawable;
+import android.os.Build;
 import android.util.Log;
 import androidx.annotation.NonNull;
 import com.hippo.conaco.Conaco;
 import com.hippo.conaco.ConacoTask;
 import com.hippo.conaco.Unikery;
-import com.hippo.image.ImageBitmap;
-import com.hippo.image.ImageDrawable;
-import com.hippo.image.RecycledException;
+import com.hippo.lib.image.Image;
 import com.hippo.widget.ObservedTextView;
 
-public class UnikeryDrawable extends WrapDrawable implements Unikery<ImageBitmap>,
+public class UnikeryDrawable extends WrapDrawable implements Unikery<Image>,
         ObservedTextView.OnWindowAttachListener {
 
     private static final String TAG = UnikeryDrawable.class.getSimpleName();
@@ -35,10 +36,12 @@ public class UnikeryDrawable extends WrapDrawable implements Unikery<ImageBitmap
     private int mTaskId = Unikery.INVALID_ID;
 
     private final ObservedTextView mTextView;
-    private final Conaco<ImageBitmap> mConaco;
+    private final Conaco<Image> mConaco;
     private String mUrl;
 
-    public UnikeryDrawable(ObservedTextView textView, Conaco<ImageBitmap> conaco) {
+    private Image mImage;
+
+    public UnikeryDrawable(ObservedTextView textView, Conaco<Image> conaco) {
         mTextView = textView;
         mTextView.setOnWindowAttachListener(this);
         mConaco = conaco;
@@ -58,7 +61,7 @@ public class UnikeryDrawable extends WrapDrawable implements Unikery<ImageBitmap
     public void load(String url) {
         if (url != null) {
             mUrl = url;
-            mConaco.load(new ConacoTask.Builder<ImageBitmap>().setUnikery(this).setUrl(url).setKey(url));
+            mConaco.load(new ConacoTask.Builder<Image>().setUnikery(this).setUrl(url).setKey(url));
 //            ConacoTask.Builder<ImageBitmap> builder =new ConacoTask.Builder<>();
 //            builder.url = url;
 //            builder.unikery = this;
@@ -68,11 +71,15 @@ public class UnikeryDrawable extends WrapDrawable implements Unikery<ImageBitmap
     }
 
     private void clearDrawable() {
-        Drawable drawable = getDrawable();
-        if (drawable instanceof ImageDrawable) {
-            ((ImageDrawable) drawable).recycle();
-        }
+//        Drawable drawable = getDrawable();
+//        if (drawable instanceof ImageDrawable) {
+//            ((ImageDrawable) drawable).recycle();
+//        }
         setDrawable(null);
+        if (mImage != null) {
+            mImage.release();
+            mImage = null;
+        }
     }
 
     @Override
@@ -129,11 +136,11 @@ public class UnikeryDrawable extends WrapDrawable implements Unikery<ImageBitmap
     public void onWait() {}
 
     @Override
-    public boolean onGetValue(@NonNull ImageBitmap value, int source) {
-        ImageDrawable drawable;
+    public boolean onGetValue(@NonNull Image value, int source) {
+        Drawable drawable;
         try {
-            drawable = new ImageDrawable(value);
-        } catch (RecycledException e) {
+            drawable =value.getDrawable();
+        } catch (Exception e) {
             Log.d(TAG, "The ImageBitmap is recycled", e);
             return false;
         }
@@ -141,7 +148,15 @@ public class UnikeryDrawable extends WrapDrawable implements Unikery<ImageBitmap
         clearDrawable();
 
         setDrawable(drawable);
-        drawable.start();
+        mImage = value;
+        if (Build.VERSION.SDK_INT>= Build.VERSION_CODES.P){
+            if (drawable instanceof AnimatedImageDrawable animatedImageDrawable)
+                animatedImageDrawable.start();
+        }else {
+            if (drawable instanceof AnimationDrawable animationDrawable)
+                animationDrawable.start();
+        }
+
 
         return true;
     }

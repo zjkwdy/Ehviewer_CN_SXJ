@@ -94,7 +94,7 @@
     <string name="app_waring">เนื้อหาภายในแอปพลิเคชั่นนี้มาจากอินเทอร์เน็ตทั้งหมด อาจมีเนื้อหาบางอย่างที่มีผลต่อร่างกายหรือจิตใจของคุณ คุณจะต้องยอมรับความเสี่ยงที่ดังกล่าว และดำเนินการต่อไป</string>
     <string name="error_username_cannot_empty">ชื่อผู้ใช้ห้ามเว้นว่างไว้</string>
     <string name="error_password_cannot_empty">รหัสผ่านห้ามเว้นว่างไว้</string>
-    <string name="skip_signing_in">ดำเนินการต่อโดยไม่ต้องลงชื่อเข้าระบบ</string>
+    <string name="guest_mode">โหมดผู้มาเยือน</string>
     <string name="sign_in_failed">การลงชื่อเข้าใช้ล้มเหลว</string>
     <string name="sign_in_failed_plain">บางทีนี้เป็นข้อผิดพลาดเนื่องจากเว็บไซต์มีการอัพเดตหรือมีบางอย่างเกิดขึ้น คุณจะต้องลองวิธีลงชื่อเข้าใช้ผ่านมุมมองเว็บไซต์ หรือวิธีแบบคุกกี๊ หรือกดปุ่มข้ามไปก่อน แต่คุณอาจจะเจอ "แพนด้าผู้เดียวดาย" ได้หลังจากข้ามการลงชื่อเข้าใช้ อันดับแรกลอง "ลงชื่อเข้าใช้ผ่านคุกกี้" ถ้าคุณเคยเข้าสู่ระบบแล้วในเวอร์ชั่น 0.6.x</string>
     <string name="press_twice_exit">กดสองครั้งเพื่อออก</string>
@@ -115,7 +115,9 @@
 
     <!-- Update -->
     <string name="update">อัพเดต</string>
+    <string name="update_fail">Check for updates failed</string>
     <string name="update_plain">เวอร์ชั่น: %1$s\nขนาดไฟล์: %2$s\n\n%3$s</string>
+    <string name="update_fail_info">Click Yes to jump to Github homepage</string>
     <string name="update_to_date">คุณกำลังใช้เวอร์ชั่นล่าสุดของ EhViewer.</string>
     <string name="update_ignore">ข้ามไป</string>
     <string name="no_updates_available">มันเป็นเวอร์ชั่นล่าสุด</string>
@@ -707,5 +709,18 @@
     <string name="settings_download_timeout_summary">%s(S),Maximum time allowed to download an image.</string>
     <string name="have_new_version">Click to see new gallery version</string>
     <string name="archiver_downloading">Arc Downloading %s</string>
+    <string name="order">Order</string>
+    <string name="sort_by_pub_time">Published Time</string>
+    <string name="sort_by_fav_time">Favorited Time</string>
+    <string name="settings_eh_sign_out_restart">Automatically restarting for you, please wait</string>
+    <!--  订阅服务  -->
+    <string name="subscription_watched">Watched</string>
+    <string name="subscription_hidden">Hidden</string>
+    <string name="delete_subscription_title">Remove Tag</string>
+    <string name="can_not_use_this_tag">Tags are not available</string>
+    <string name="add_tag_dialog_title">Add Tag</string>
+    <string name="tag_title">Tag</string>
+    <string name="empty_subscription">Subscription is empty</string>
+    <string name="subscription_success">%s success</string>
 
 </resources>

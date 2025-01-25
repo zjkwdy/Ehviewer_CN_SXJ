@@ -48,7 +48,6 @@ import androidx.annotation.IdRes;
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
 import androidx.annotation.StringRes;
-import androidx.appcompat.app.ActionBarDrawerToggle;
 import androidx.appcompat.app.AlertDialog;
 
 import com.google.android.material.navigation.NavigationView;
@@ -90,6 +89,8 @@ import com.hippo.ehviewer.ui.scene.SignInScene;
 import com.hippo.ehviewer.ui.scene.SolidScene;
 import com.hippo.ehviewer.ui.scene.WarningScene;
 import com.hippo.ehviewer.ui.scene.WebViewSignInScene;
+import com.hippo.ehviewer.ui.splash.SplashActivity;
+import com.hippo.ehviewer.updater.AppUpdater;
 import com.hippo.ehviewer.widget.EhDrawerLayout;
 import com.hippo.ehviewer.widget.LimitsCountView;
 import com.hippo.io.UniFileInputStreamPipe;
@@ -102,10 +103,10 @@ import com.hippo.util.BitmapUtils;
 import com.hippo.util.GifHandler;
 import com.hippo.util.PermissionRequester;
 import com.hippo.widget.AvatarImageView;
-import com.hippo.yorozuya.IOUtils;
-import com.hippo.yorozuya.ResourcesUtils;
-import com.hippo.yorozuya.SimpleHandler;
-import com.hippo.yorozuya.ViewUtils;
+import com.hippo.lib.yorozuya.IOUtils;
+import com.hippo.lib.yorozuya.ResourcesUtils;
+import com.hippo.lib.yorozuya.SimpleHandler;
+import com.hippo.lib.yorozuya.ViewUtils;
 
 import java.io.File;
 import java.io.FileOutputStream;
@@ -371,6 +372,13 @@ public final class MainActivity extends StageActivity
 
     @Override
     protected void onCreate2(@Nullable Bundle savedInstanceState) {
+        Intent intent = getIntent();
+        if (intent != null) {
+            boolean res = intent.getBooleanExtra(SplashActivity.KEY_RESTART,false);
+            if (res){
+                savedInstanceState = null;
+            }
+        }
         setContentView(R.layout.activity_main);
 
         mDrawerLayout = (EhDrawerLayout) ViewUtils.$$(this, R.id.draw_view);
@@ -426,8 +434,15 @@ public final class MainActivity extends StageActivity
         } else {
             onRestore(savedInstanceState);
         }
-
         EhTagDatabase.update(this);
+    }
+
+    @Override
+    protected void onStart() {
+        super.onStart();
+        if (!Settings.getCloseAutoUpdate()){
+            AppUpdater.update(this,false);
+        }
     }
 
     private void initUserImage() {
@@ -549,7 +564,7 @@ public final class MainActivity extends StageActivity
 
     @Override
     public void onSaveInstanceState(Bundle outState, PersistableBundle outPersistentState) {
-        super.onSaveInstanceState(outState, outPersistentState);
+//        super.onSaveInstanceState(outState, outPersistentState);
         outState.putInt(KEY_NAV_CHECKED_ITEM, mNavCheckedItem);
     }
 
